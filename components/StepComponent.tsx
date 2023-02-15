@@ -21,7 +21,7 @@ export default function StepComponent(props: {
   return (
     <>
       <div className=" my-3 h-full w-full rounded-2xl border border-blue-200 p-5">
-        <h3 className="mb-2">Step number {props.stepNumber} </h3>
+        <h3 className="mb-2 text-lg font-medium">Step {props.stepNumber} </h3>
         {isEditable ? (
           <input
             className="h-full w-full rounded-2xl border p-5"

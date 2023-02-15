@@ -3,41 +3,26 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import StepComponent from "@/components/StepComponent";
 const inter = Inter({ subsets: ["latin"] });
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebaseUtils/firebase";
 import { doc, addDoc, collection } from "firebase/firestore";
+import Link from "next/link";
+import SignUp from "@/components/authComponents/SignUp";
+import LogIn from "@/components/authComponents/LogIn";
+import LogOut from "@/components/authComponents/LogOut";
+import { useUserAuth } from "@/contexts/UserContext";
+import NavBar from "@/components/coreComponents/NavBar";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  interface step {
-    id: number;
-    content: string;
-  }
-  const [stepArray, setStepArray] = useState<step[]>([]);
-  const [instructionalName, setInstructionalName] = useState("");
-  const [instructional, setInstructional] = useState({});
+  const { user } = useUserAuth();
+  const router = useRouter();
 
-  const addToStepArray = (input: any) => {
-    setStepArray((prevArr) => [...prevArr, input]);
-  };
-
-  const handleInstructionalName = (e: any) => {
-    const value = e.target.value;
-    setInstructionalName(value);
-  };
-
-  const saveInstructional = () => {
-    setInstructional({
-      name: instructionalName,
-      steps: stepArray,
-    });
-  };
-
-  const sendInstructional = async () => {
-    await addDoc(collection(db, "guides"), {
-      name: instructionalName,
-      steps: stepArray,
-    });
-  };
+  useEffect(() => {
+    if (user) {
+      router.push("/user/profile");
+    }
+  }, []);
 
   return (
     <>
@@ -47,63 +32,28 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <button
-          onClick={() => addToStepArray({ id: 0, content: "" })}
-          className=" mb-5  border px-3 py-2"
-        >
-          Add step to array
-        </button>
-        <button
-          onClick={() => console.log(instructional, instructionalName)}
-          className=" mb-5  border px-3 py-2"
-        >
-          Log the instructional
-        </button>
-      </header>
-      <main>
-        <div className="container mx-auto">
-          <h1 className="text-4xl font-bold text-slate-700">
-            Create Instructional
+      <NavBar />
+      <header className="h-screen w-full">
+        <div className="container mx-auto flex h-full flex-col items-center justify-center px-2 text-center">
+          <h1 className="mb-3 text-5xl font-bold text-gray-800">
+            Instructional
           </h1>
-          <input
-            className="my-5 text-2xl font-semibold "
-            type="text"
-            placeholder="Type Name Here..."
-            onChange={(e) => handleInstructionalName(e)}
-          />
-          <button
-            className="block rounded-2xl border border-blue-200 px-5 py-2"
-            onClick={() => {
-              saveInstructional();
-              sendInstructional();
-            }}
-          >
-            Save Instructional
-          </button>
-          <div className="mx-auto w-1/2">
-            {!stepArray ? (
-              <StepComponent
-                stepArray={stepArray}
-                setStepArray={setStepArray}
-                pullData={addToStepArray}
-                stepNumber={1}
-              />
-            ) : (
-              stepArray.map((step, idx) => {
-                return (
-                  <StepComponent
-                    stepNumber={idx + 1}
-                    key={idx}
-                    pullData={addToStepArray}
-                    stepArray={stepArray}
-                    setStepArray={setStepArray}
-                  />
-                );
-              })
-            )}
-          </div>
+          <p className="mb-3 text-lg leading-8">
+            Put together guides and tutorials quickly, easily, and beautifully.
+          </p>
+          <Link href="/create-guide">
+            <button className=" rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-2  font-medium tracking-wider text-white shadow-lg transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500">
+              Create
+            </button>
+          </Link>
         </div>
+      </header>
+      <main className="container mx-auto">
+        <SignUp />
+        <div>
+          <p>-----------</p>
+        </div>
+        <LogIn />
       </main>
     </>
   );
