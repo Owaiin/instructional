@@ -18,7 +18,7 @@ export default function Home() {
   const [instructionalName, setInstructionalName] = useState("");
   const [instructional, setInstructional] = useState({});
   const [description, setDescription] = useState("");
-  const { user } = useUserAuth();
+  const { user, setUserDocs } = useUserAuth();
 
   // Add another step into the StepArray
   const addToStepArray = (input: any) => {
@@ -44,6 +44,7 @@ export default function Home() {
       description: description,
       steps: stepArray,
     });
+    setUserDocs((prevArray: any) => [...prevArray, instructional]);
   };
 
   // Send the instructional to Firestore
@@ -70,7 +71,7 @@ export default function Home() {
           onClick={() =>
             console.log(stepArray, instructional, instructionalName)
           }
-          className=" mb-5  border px-3 py-2"
+          className=" mb-5 border px-3 py-2"
         >
           Log the instructional
         </button>

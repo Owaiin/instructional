@@ -18,11 +18,11 @@ export default function Home() {
   const { user } = useUserAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/user/profile");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/user/profile");
+  //   }
+  // }, []);
 
   return (
     <>
