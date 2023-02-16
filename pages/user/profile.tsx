@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import NavBar from "@/components/coreComponents/NavBar";
 import { db } from "@/firebaseUtils/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 export default function Profile() {
   interface userGuide {
@@ -21,8 +28,15 @@ export default function Profile() {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       console.log(doc.id, "=>", doc.data());
-      setUserDocs((prevArray: any) => [...prevArray, doc.data()]);
+      setUserDocs((prevArray: any) => [
+        ...prevArray,
+        { id: doc.id, data: doc.data() },
+      ]);
     });
+  };
+
+  const removeDoc = async (docId: string) => {
+    await deleteDoc(doc(db, "guides", docId));
   };
 
   useEffect(() => {
@@ -61,9 +75,17 @@ export default function Profile() {
                     className="rounded-lg border border-gray-800 p-3"
                   >
                     <h3 className="text-2xl font-bold text-gray-700">
-                      {item.name}
+                      {item.data.name}
                     </h3>
-                    <p className="text-gray-700">{item.description}</p>
+                    <p className="text-gray-700">{item.data.description}</p>
+                    <button
+                      className="my-2"
+                      onClick={() => {
+                        removeDoc(item.id);
+                      }}
+                    >
+                      DELETE
+                    </button>
                   </li>
                 );
               })
