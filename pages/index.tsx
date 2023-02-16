@@ -42,7 +42,7 @@ export default function Home() {
             Put together guides and tutorials quickly, easily, and beautifully.
           </p>
           <Link href="/create-guide">
-            <button className=" rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-2  font-medium tracking-wider text-white shadow-lg transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500">
+            <button className=" rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-2  font-medium tracking-wider text-white shadow-lg transition-all  hover:from-yellow-400 hover:to-orange-500">
               Create
             </button>
           </Link>
