@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "@/firebaseUtils/firebase";
 
@@ -21,6 +22,9 @@ export function UserAuthContextProvider({ children }) {
   }
   function logOut() {
     return signOut(auth);
+  }
+  function updateUserName(userName) {
+    return updateProfile(auth.currentUser, { displayName: userName });
   }
 
   useEffect(() => {
@@ -41,6 +45,7 @@ export function UserAuthContextProvider({ children }) {
         logIn,
         signUp,
         logOut,
+        updateUserName,
       }}
     >
       {children}

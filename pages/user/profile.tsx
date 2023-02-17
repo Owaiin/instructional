@@ -16,8 +16,9 @@ import { RiDeleteBin7Line } from "react-icons/ri";
 import SmallCard from "@/components/coreComponents/Cards";
 
 export default function Profile() {
-  const { user } = useUserAuth();
+  const { user, updateUserName } = useUserAuth();
   const { postArray, setPostArray } = usePostsContext();
+  const [userName, setUserName] = useState("");
   const router = useRouter();
 
   // Remove a guide from firestore
@@ -38,12 +39,34 @@ export default function Profile() {
       <main className="mt-20">
         <div className="container mx-auto mb-20 px-2">
           <h1 className="mb-5 text-4xl font-bold text-gray-800">
-            {user && user.uid}
+            {user.displayName ? userName : "Set your username :)"}
           </h1>
           <p>
             <span className="font-semibold text-gray-800">Email: </span>
             {user && user.email}
           </p>
+          {!user.displayName ? (
+            <>
+              <p>Add new username</p>
+              <form action="">
+                <input
+                  className="border"
+                  type="text"
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    updateUserName(userName);
+                  }}
+                >
+                  Change
+                </button>
+              </form>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         {/* User Posts */}
         <div className="container mx-auto">
