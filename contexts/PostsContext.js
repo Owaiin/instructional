@@ -12,7 +12,10 @@ export function PostContextProvider({ children }) {
     const dataSnapshot = await getDocs(collection(db, "guides"));
     dataSnapshot.forEach((doc) => {
       //   console.log(doc.id, "=>", doc.data());
-      setPostArray((prevArray) => [...prevArray, doc.data()]);
+      setPostArray((prevArray) => [
+        ...prevArray,
+        { id: doc.id, data: doc.data() },
+      ]);
     });
     console.log("getDataReached");
   };
@@ -23,7 +26,7 @@ export function PostContextProvider({ children }) {
   }, []);
 
   return (
-    <postsContext.Provider value={{ getData, postArray }}>
+    <postsContext.Provider value={{ getData, postArray, setPostArray }}>
       {children}
     </postsContext.Provider>
   );

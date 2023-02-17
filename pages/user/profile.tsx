@@ -11,85 +11,65 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { usePostsContext } from "@/contexts/PostsContext";
+import { RiDeleteBin7Line } from "react-icons/ri";
+import SmallCard from "@/components/coreComponents/Cards";
 
 export default function Profile() {
-  interface userGuide {
-    uid: string;
-    content: string;
-    steps: [];
-  }
-  const { user, logOut, userDocs, setUserDocs } = useUserAuth();
-  const [userGuides, setUserGuides] = useState<any[]>([]);
+  const { user } = useUserAuth();
+  const { postArray, setPostArray } = usePostsContext();
   const router = useRouter();
-  const [userId, setUserId] = useState();
 
-  const getUserDocs = async (uid: string) => {
-    const q = await query(collection(db, "guides"), where("user", "==", uid));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, "=>", doc.data());
-      setUserDocs((prevArray: any) => [
-        ...prevArray,
-        { id: doc.id, data: doc.data() },
-      ]);
-    });
-  };
-
+  // Remove a guide from firestore
   const removeDoc = async (docId: string) => {
     await deleteDoc(doc(db, "guides", docId));
   };
 
+  // If user isn't signed in - redirect to home page - otherwise, getUserDocs on mount
   useEffect(() => {
     if (!user) {
       router.push("/");
-    } else if (user.uid != null && userDocs.length === 0) {
-      getUserDocs(user.uid);
     }
-  }, [user, userDocs]);
+  }, [user]);
 
   return (
     <>
       <NavBar />
       <main className="mt-20">
-        <div className="container mx-auto px-2">
-          {" "}
-          {!user ? (
-            <></>
-          ) : (
-            <>
-              <h1>{user ? "logged in" : "logged out"}</h1>
-            </>
-          )}
-          {/* <p>{user.uid}</p> */}
-          <button onClick={() => console.log(userDocs)}>Log user</button>
+        <div className="container mx-auto mb-20 px-2">
+          <h1 className="mb-5 text-4xl font-bold text-gray-800">
+            {user && user.uid}
+          </h1>
+          <p>
+            <span className="font-semibold text-gray-800">Email: </span>
+            {user && user.email}
+          </p>
         </div>
+        {/* User Posts */}
         <div className="container mx-auto">
           <ul className=" grid list-none grid-cols-2 gap-5">
-            {!userDocs ? (
-              <></>
-            ) : (
-              userDocs.map((item, idx) => {
-                return (
-                  <li
-                    key={idx}
-                    className="rounded-lg border border-gray-800 p-3"
-                  >
-                    <h3 className="text-2xl font-bold text-gray-700">
-                      {item.data.name}
-                    </h3>
-                    <p className="text-gray-700">{item.data.description}</p>
-                    <button
-                      className="my-2"
-                      onClick={() => {
+            {postArray &&
+              // filter the postArray to display only posts that with a user field that matches the user uid
+              postArray
+                .filter((post: any) => post.data.user === user.uid)
+                .map((item: any, idx: number) => {
+                  return (
+                    <SmallCard
+                      key={idx}
+                      title={item.data.name}
+                      description={item.data.description}
+                      delete={true}
+                      onSmash={() => {
                         removeDoc(item.id);
+                        setPostArray(
+                          postArray.filter(
+                            (userDoc: any) => userDoc.id !== item.id
+                          )
+                        );
                       }}
-                    >
-                      DELETE
-                    </button>
-                  </li>
-                );
-              })
-            )}
+                    />
+                  );
+                })}
           </ul>
         </div>
       </main>

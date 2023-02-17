@@ -1,13 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
 import StepComponent from "@/components/StepComponent";
-const inter = Inter({ subsets: ["latin"] });
 import { useState } from "react";
 import { db } from "../firebaseUtils/firebase";
 import { doc, addDoc, collection } from "firebase/firestore";
 import NavBar from "@/components/coreComponents/NavBar";
 import { useUserAuth } from "@/contexts/UserContext";
+import { usePostsContext } from "@/contexts/PostsContext";
 
 export default function Home() {
   interface step {
@@ -18,7 +17,8 @@ export default function Home() {
   const [instructionalName, setInstructionalName] = useState("");
   const [instructional, setInstructional] = useState({});
   const [description, setDescription] = useState("");
-  const { user, setUserDocs } = useUserAuth();
+  const { user } = useUserAuth();
+  const { setPostArray, getData } = usePostsContext();
 
   // Add another step into the StepArray
   const addToStepArray = (input: any) => {
@@ -43,8 +43,9 @@ export default function Home() {
       name: instructionalName,
       description: description,
       steps: stepArray,
+      user: user.uid,
+      userName: user.displayName,
     });
-    setUserDocs((prevArray: any) => [...prevArray, instructional]);
   };
 
   // Send the instructional to Firestore
@@ -54,6 +55,7 @@ export default function Home() {
       description: description,
       steps: stepArray,
       user: user.uid,
+      userName: user.displayName,
     });
   };
 
@@ -67,14 +69,6 @@ export default function Home() {
       </Head>
       <header>
         <NavBar />
-        <button
-          onClick={() =>
-            console.log(stepArray, instructional, instructionalName)
-          }
-          className=" mb-5 border px-3 py-2"
-        >
-          Log the instructional
-        </button>
       </header>
       <main>
         <div className="container mx-auto">
@@ -97,8 +91,11 @@ export default function Home() {
           <button
             className="block rounded-2xl border border-slate-700 px-5 py-2"
             onClick={() => {
+              // Need to put this into a single handler but it works for now
               saveInstructional();
               sendInstructional();
+              setPostArray([]);
+              getData();
             }}
           >
             Save Instructional
@@ -127,6 +124,9 @@ export default function Home() {
             )}
           </div>
         </div>
+        <button onClick={() => console.log(instructional)}>
+          Log Instructional
+        </button>
       </main>
     </>
   );

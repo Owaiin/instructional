@@ -27,7 +27,6 @@ export function UserAuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       console.log("auth", currentuser);
       setUser(currentuser);
-      setUserDocs([]);
     });
 
     return () => {
@@ -37,7 +36,12 @@ export function UserAuthContextProvider({ children }) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, userDocs, setUserDocs }}
+      value={{
+        user,
+        logIn,
+        signUp,
+        logOut,
+      }}
     >
       {children}
     </userAuthContext.Provider>
