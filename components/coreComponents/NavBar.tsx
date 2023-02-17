@@ -33,7 +33,7 @@ export default function NavBar() {
           )}
         </div>
       </nav>
-      {navOpen ? <NavMenu /> : <></>}
+      {navOpen ? <NavMenu setNav={() => setNavOpen(false)} /> : <></>}
     </>
   );
 }
