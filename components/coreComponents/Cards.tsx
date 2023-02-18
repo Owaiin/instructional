@@ -8,12 +8,14 @@ export default function SmallCard(props: {
   delete: boolean;
   //   for on click
   onSmash: any;
+  // post ID
+  postId: string;
 }) {
   return (
     <>
       <div className="h-full w-full rounded-lg border border-gray-800 p-3">
         <div className="flex w-full items-center justify-between">
-          <Link href={`/posts/${props.title}`}>
+          <Link href={`/posts/${props.postId}`}>
             <h3 className="text-2xl font-bold text-gray-800">{props.title}</h3>
           </Link>
           <button className="my-2 text-xl" onClick={props?.onSmash}>

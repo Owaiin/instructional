@@ -22,6 +22,7 @@ export default function Browse() {
                   key={idx}
                   title={item.data.name}
                   description={item.data.description}
+                  postId={item.id}
                 />
               );
             })}

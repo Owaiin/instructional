@@ -18,6 +18,7 @@ export function PostContextProvider({ children }) {
       ]);
     });
     console.log("getDataReached");
+    console.log(dataSnapshot.docs);
   };
 
   useEffect(() => {
