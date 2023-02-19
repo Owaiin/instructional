@@ -6,13 +6,14 @@ import { db } from "@/firebaseUtils/firebase";
 import { doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore";
 import { useState } from "react";
 import NavBar from "@/components/coreComponents/NavBar";
+import Image from "next/image";
 
 interface postInterface {
   id: string;
   data: {
     name: string;
     description: string;
-    steps: [id: number, content: string];
+    steps: [id: number, content: string, imageUrl: string];
     userId: string;
   };
 }
@@ -31,6 +32,18 @@ export default function PostPage(props: { post: any }) {
                 <p className="my-2 text-xl font-medium text-gray-800">
                   Step {step.id}
                 </p>
+
+                {step.imageUrl !== null ? (
+                  <Image
+                    src={step.imageUrl}
+                    width={500}
+                    height={500}
+                    alt="alt image description"
+                  />
+                ) : (
+                  <></>
+                )}
+
                 <p>{step.content}</p>
               </li>
             </>

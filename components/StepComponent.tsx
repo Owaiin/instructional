@@ -1,5 +1,8 @@
 import { type } from "os";
 import { useState, useRef } from "react";
+import { storage } from "@/firebaseUtils/firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import Image from "next/image";
 
 export default function StepComponent(props: {
   stepNumber: number;
@@ -10,6 +13,8 @@ export default function StepComponent(props: {
   const [typeContent, setTypeContent] = useState("");
   const [isEditable, setIsEditable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [imgUrl, setImgUrl] = useState(null);
+  const [progressPercent, setProgressPercent] = useState(0);
   const editElement = useRef();
 
   const typeHandler = (e: any) => {
@@ -18,10 +23,60 @@ export default function StepComponent(props: {
     // props.pullData(typeContent);
   };
 
+  const handleImageUpload = (e: any) => {
+    e.preventDefault();
+    // save the uploaded file to a variable
+    const file = e.target[0]?.files[0];
+
+    if (!file) return;
+    if (file.size > 5242880) {
+      return alert("file is too big! maximum file size is 5MB");
+    }
+    // Create a reference in storage for the file
+    const storageRef = ref(storage, `files/${file.name}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgressPercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImgUrl(downloadURL);
+          console.log("Upload done, url here:", downloadURL);
+        });
+      }
+    );
+  };
+
   return (
     <>
       <div className=" my-3 h-full w-full rounded-2xl border border-blue-200 p-5">
         <h3 className="mb-2 text-lg font-medium">Step {props.stepNumber} </h3>
+        {/* image upload */}
+        <div className="mb-5">
+          {imgUrl !== null ? (
+            <Image src={imgUrl} width={500} height={500} alt="test Alt" />
+          ) : (
+            <></>
+          )}
+          <form onSubmit={(e) => handleImageUpload(e)}>
+            <input type="file" accept=".jpg, .jpeg, .png" />
+            <button className="border px-5 py-2" type="submit">
+              Upload button
+            </button>
+          </form>
+          <p className="mb-2">Upload an image</p>
+        </div>
+
         {isEditable ? (
           <input
             className="h-full w-full rounded-2xl border p-5"
@@ -51,7 +106,11 @@ export default function StepComponent(props: {
             <button
               className="rounded-2xl border border-blue-200 px-5 py-2"
               onClick={() => {
-                props.pullData({ id: props.stepNumber, content: typeContent });
+                props.pullData({
+                  id: props.stepNumber,
+                  content: typeContent,
+                  imageUrl: imgUrl,
+                });
                 setIsEditable(false);
               }}
             >

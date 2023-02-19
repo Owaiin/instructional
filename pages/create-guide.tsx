@@ -12,8 +12,10 @@ export default function Home() {
   interface step {
     id: number;
     content: string;
+    name: string;
+    imageUrl: string;
   }
-  const [stepArray, setStepArray] = useState<step[]>([{ id: 0, content: "" }]);
+  const [stepArray, setStepArray] = useState<step[]>([]);
   const [instructionalName, setInstructionalName] = useState("");
   const [instructional, setInstructional] = useState({});
   const [description, setDescription] = useState("");
@@ -102,7 +104,7 @@ export default function Home() {
           </button>
 
           <div className="mx-auto w-1/2">
-            {!stepArray ? (
+            {stepArray.length === 0 ? (
               <StepComponent
                 stepArray={stepArray}
                 setStepArray={setStepArray}
