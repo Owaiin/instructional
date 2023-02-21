@@ -25,6 +25,7 @@ export default function StepComponent(props: {
 
   const handleImageUpload = (e: any) => {
     e.preventDefault();
+    console.log("fired");
     // save the uploaded file to a variable
     const file = e.target[0]?.files[0];
 
@@ -59,7 +60,11 @@ export default function StepComponent(props: {
 
   return (
     <>
-      <div className=" my-3 h-full w-full rounded-2xl border border-blue-500 p-5">
+      <div
+        className={`my-3 h-full w-full rounded-2xl border ${
+          isEditable ? "border-blue-500 shadow-2xl" : "border-gray-300"
+        }  p-5`}
+      >
         <h3 className="mb-2 text-lg font-medium">Step {props.stepNumber} </h3>
         {/* image upload */}
         {imgUrl !== null ? (
@@ -88,6 +93,11 @@ export default function StepComponent(props: {
                   Upload file
                 </button>
               </form>
+            </>
+          )}
+          {progressPercent !== 0 && progressPercent !== 100 && (
+            <>
+              <p>Uploading: {progressPercent}%</p>
             </>
           )}
         </div>

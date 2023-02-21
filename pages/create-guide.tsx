@@ -8,6 +8,7 @@ import NavBar from "@/components/coreComponents/NavBar";
 import { useUserAuth } from "@/contexts/UserContext";
 import { usePostsContext } from "@/contexts/PostsContext";
 import MainContainer from "@/components/coreComponents/MainContainer";
+import { useRouter } from "next/router";
 
 export default function Home() {
   interface step {
@@ -24,6 +25,7 @@ export default function Home() {
   const [description, setDescription] = useState("");
   const { user } = useUserAuth();
   const { setPostArray, getData } = usePostsContext();
+  const router = useRouter();
 
   // Add another step into the StepArray
   const addToStepArray = (input: any) => {

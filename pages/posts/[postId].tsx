@@ -35,7 +35,7 @@ export default function PostPage(props: { post: any }) {
               return (
                 <>
                   <li
-                    className="  rounded-2xl bg-white p-5 shadow-2xl"
+                    className="  my-10 rounded-2xl bg-white p-5 shadow-2xl"
                     key={idx}
                   >
                     {step.imageUrl !== null ? (
