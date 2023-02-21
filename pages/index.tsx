@@ -39,7 +39,7 @@ export default function Home() {
             Instructional
           </h1>
           <p className="mb-3 text-lg leading-8">
-            Put together guides and tutorials quickly, easily, and beautifully.
+            Put together guides and tutorials quickly and easily.
           </p>
           <Link href="/create-guide">
             <button className=" rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-2  font-medium tracking-wider text-white shadow-lg transition-all  hover:from-yellow-400 hover:to-orange-500">
@@ -48,13 +48,6 @@ export default function Home() {
           </Link>
         </div>
       </header>
-      <main className="container mx-auto">
-        <SignUp />
-        <div>
-          <p>-----------</p>
-        </div>
-        <LogIn />
-      </main>
     </>
   );
 }

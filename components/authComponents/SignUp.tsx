@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useUserAuth } from "@/contexts/UserContext";
+import { RiCloseFill } from "react-icons/ri";
+import AccountDetailsForm from "../coreComponents/AccountDetailsForm";
 
-export default function SignUp() {
+export default function SignUp(props: { setOpen: any }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
@@ -19,36 +21,16 @@ export default function SignUp() {
 
   return (
     <>
-      <p>SignUp</p>
-      <div>
-        <form
-          className="grid w-full gap-5"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(e);
-          }}
-        >
-          <div>
-            <label htmlFor="email">Email Address</label>
-            <input
-              className="border p-2"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              className="border p-2"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button className=" block rounded-lg border px-5 py-2">
-            Sign Up
-          </button>
-        </form>
-      </div>
+      <AccountDetailsForm
+        title="Sign Up"
+        closeToggle={props?.setOpen}
+        emailInput={(e: any) => setEmail(e.target.value)}
+        passwordInput={(e: any) => setPassword(e.target.value)}
+        submit={(e: any) => {
+          e.preventDefault;
+          handleSubmit(e);
+        }}
+      />
     </>
   );
 }

@@ -7,6 +7,9 @@ import { doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore";
 import { useState } from "react";
 import NavBar from "@/components/coreComponents/NavBar";
 import Image from "next/image";
+import MainContainer from "@/components/coreComponents/MainContainer";
+import H1 from "@/components/coreComponents/styleComponents/H1";
+import H2 from "@/components/coreComponents/styleComponents/H2";
 
 interface postInterface {
   id: string;
@@ -22,35 +25,39 @@ export default function PostPage(props: { post: any }) {
   return (
     <>
       <NavBar />
-      <h1>{props.post.name}</h1>
-      <p>{props.post.description}</p>
-      <ul>
-        {props.post.steps.map((step, idx) => {
-          return (
-            <>
-              <li key={idx}>
-                <p className="my-2 text-xl font-medium text-gray-800">
-                  Step {step.id}
-                </p>
-
-                {step.imageUrl !== null ? (
-                  <Image
-                    src={step.imageUrl}
-                    width={500}
-                    height={500}
-                    alt="alt image description"
-                  />
-                ) : (
-                  <></>
-                )}
-
-                <p>{step.content}</p>
-              </li>
-            </>
-          );
-        })}
-      </ul>
-      <button onClick={() => console.log(props.post)}>Log post prop</button>
+      <MainContainer>
+        <H1 text={props.post.name} />
+        <p>{props.post.description}</p>
+        <ul className="">
+          {props.post.steps
+            .filter((step: any) => step.id !== 0)
+            .map((step: any, idx: number) => {
+              return (
+                <>
+                  <li
+                    className="  rounded-2xl bg-white p-5 shadow-2xl"
+                    key={idx}
+                  >
+                    {step.imageUrl !== null ? (
+                      <Image
+                        src={step.imageUrl}
+                        width={500}
+                        height={500}
+                        alt="alt image description"
+                        className="mb-5 rounded-2xl"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                    <H2 text={`Step ${step.id}`} />
+                    <p>{step.content}</p>
+                  </li>
+                </>
+              );
+            })}
+        </ul>
+        {/* <button onClick={() => console.log(props.post)}>Log post prop</button> */}
+      </MainContainer>
     </>
   );
 }

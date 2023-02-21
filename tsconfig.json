@@ -23,7 +23,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "contexts/UserContext.js"
+    "contexts/UserContext.js",
+    "pages/posts/[postId].js"
   ],
   "exclude": ["node_modules"]
 }

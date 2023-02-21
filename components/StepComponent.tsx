@@ -59,28 +59,43 @@ export default function StepComponent(props: {
 
   return (
     <>
-      <div className=" my-3 h-full w-full rounded-2xl border border-blue-200 p-5">
+      <div className=" my-3 h-full w-full rounded-2xl border border-blue-500 p-5">
         <h3 className="mb-2 text-lg font-medium">Step {props.stepNumber} </h3>
         {/* image upload */}
+        {imgUrl !== null ? (
+          <></>
+        ) : (
+          <p className="mb-2 font-medium text-gray-800">Upload an image</p>
+        )}
+
         <div className="mb-5">
           {imgUrl !== null ? (
-            <Image src={imgUrl} width={500} height={500} alt="test Alt" />
+            <Image
+              src={imgUrl}
+              width={500}
+              height={500}
+              alt="test Alt"
+              className=""
+            />
           ) : (
-            <></>
+            <>
+              <form className="" onSubmit={(e) => handleImageUpload(e)}>
+                <input type="file" accept=".jpg, .jpeg, .png" />
+                <button
+                  className="mt-2 mb-5 w-full rounded-2xl border border-blue-500 px-5 py-2 font-medium transition-all duration-200 ease-in-out hover:bg-blue-500 hover:text-white"
+                  type="submit"
+                >
+                  Upload file
+                </button>
+              </form>
+            </>
           )}
-          <form onSubmit={(e) => handleImageUpload(e)}>
-            <input type="file" accept=".jpg, .jpeg, .png" />
-            <button className="border px-5 py-2" type="submit">
-              Upload button
-            </button>
-          </form>
-          <p className="mb-2">Upload an image</p>
         </div>
 
         {isEditable ? (
-          <input
+          <textarea
             className="h-full w-full rounded-2xl border p-5"
-            type="text"
+            name="text"
             placeholder="Type step info here"
             onChange={(e) => typeHandler(e)}
           />
@@ -104,7 +119,7 @@ export default function StepComponent(props: {
         <div className="flex w-full justify-between pt-3">
           {isEditable ? (
             <button
-              className="rounded-2xl border border-blue-200 px-5 py-2"
+              className="rounded-2xl  bg-blue-500 px-5 py-2 font-medium tracking-wider text-white transition-all duration-200 ease-in-out hover:bg-green-500"
               onClick={() => {
                 props.pullData({
                   id: props.stepNumber,

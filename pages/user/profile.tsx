@@ -3,17 +3,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import NavBar from "@/components/coreComponents/NavBar";
 import { db } from "@/firebaseUtils/firebase";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { usePostsContext } from "@/contexts/PostsContext";
-import { RiDeleteBin7Line } from "react-icons/ri";
 import SmallCard from "@/components/coreComponents/Cards";
+import MainContainer from "@/components/coreComponents/MainContainer";
 
 export default function Profile() {
   const { user, updateUserName } = useUserAuth();
@@ -36,8 +29,8 @@ export default function Profile() {
   return (
     <>
       <NavBar />
-      <main className="mt-20">
-        <div className="container mx-auto mb-20 px-2">
+      <MainContainer>
+        <div>
           <h1 className="mb-5 text-4xl font-bold text-gray-800">
             {user.displayName ? userName : "Set your username :)"}
           </h1>
@@ -82,6 +75,7 @@ export default function Profile() {
                       title={item.data.name}
                       description={item.data.description}
                       delete={true}
+                      postId={item.id}
                       onSmash={() => {
                         removeDoc(item.id);
                         setPostArray(
@@ -95,7 +89,7 @@ export default function Profile() {
                 })}
           </ul>
         </div>
-      </main>
+      </MainContainer>
     </>
   );
 }

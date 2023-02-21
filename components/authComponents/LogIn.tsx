@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useUserAuth } from "@/contexts/UserContext";
 import { useRouter } from "next/router";
+import AccountDetailsForm from "../coreComponents/AccountDetailsForm";
 
-export default function LogIn() {
+export default function LogIn(props: { setOpen: any }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,7 +23,7 @@ export default function LogIn() {
 
   return (
     <>
-      <p>LogIn</p>
+      {/* <p>LogIn</p>
       <div>
         <form
           className="grid w-full gap-5"
@@ -49,7 +50,16 @@ export default function LogIn() {
           </div>
           <button className=" rounded-lg border px-5 py-2">Sign Up</button>
         </form>
-      </div>
+      </div> */}
+      <AccountDetailsForm
+        title="Login"
+        closeToggle={props.setOpen}
+        emailInput={(e: any) => setEmail(e.target.value)}
+        passwordInput={(e: any) => setPassword(e.target.value)}
+        submit={(e: any) => {
+          handleSubmit(e);
+        }}
+      />
     </>
   );
 }
