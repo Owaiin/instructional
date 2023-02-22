@@ -1,38 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Instructional - [Live Site Here](https://instructional.netlify.app)
 
-## Getting Started
+A test to see if I could combine User Auth, CRUD, and Dynamic Static Paths within NextJS to support user generated content. The goal of the website is to easily be able to create guides and tutorials without the author being able to clog up the information with junk as seen on almost any other website for SEO purposes. 
+ 
+## Main Goal
+Instructional is meant to provide a platform for people to be able to share and receive information with the smallest amount of filler possible.
 
-First, run the development server:
+## How
+Using Firebase as a backend as a service, I've thrown all of the Auth into a Context son that I can access the user object globally. I've done something similar with the Posts so that when the page loads, all of the posts are gathered which reduces the amount of time it takes to view the data on the Browse and Profile page. The Posts context also handles the state management of Posts, so that if a write is actioned, a pull isn't also actioned - reducing the amount of calls to the backend. 
+GetStaticPaths was utilised to dynamically render [posts], so that users can create a post and then share the link with someone. Using the Fallback: "blocking" to create a staic page once the path has been visited for the first time. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+##Design
+Honestly I didn't put a lot of thought into the design, and there main area that needs work is the flow for the Create-Guide page. This may be something that I revisit in the future after spending some time in Figma (or asking midhjourney to generate some ideas :) )
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+##Learning Outcomes
+  - Typescript
+    - I need to spend a lot more time using Typescript and to properly learn the syntax when it comes down to declaring objects, state(with arrays), and props. Passing a function through to a prop seems confusing so I need to focus more time looking into this. Although the code works and would likely work fine in JS, it's about having clean code that many other people can read and write with. So this is an area I'll continue to work on and improve with over time.
+  
+  - Context is Awesome
+    - After doing prop-drilling in my previous projects, finally getting to grips with Context feels like a massive achievement. Being able to globally access variable is actually awesome and something I'm going to continue to use where it seems fit. Obviously sometimes prop-drilling has some use-cases, but where Context fits, I shall use it.
+    
+  - MORE COMPONENTS
+      - Creating and building components is a much better way of working and I need to do it more. I've made an improvement on the amount of components used since my last project but I've not done nearly enough as I should. For example, in the SignUp and Login boxes, they're both the same and utilise the AccountDetailsForm component, but I should have instead just created a form component and switched the inputs, so that the Login and SignIn componenets could be combined into a singular component. It would also have helped to create moren styling components for P, H3, H4, Cards, LeadText, and so on.
