@@ -8,6 +8,8 @@ export default function SiteHead(props: {
   return (
     <>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
         <title>{props.title}</title>
         <meta name="description" content={props.description} />
         <meta name="robots" content="index, follow" />

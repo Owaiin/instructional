@@ -8,6 +8,7 @@ import SmallCard from "@/components/coreComponents/Cards";
 import MainContainer from "@/components/coreComponents/MainContainer";
 import { Main } from "next/document";
 import H1 from "@/components/coreComponents/styleComponents/H1";
+import SiteHead from "@/components/coreComponents/SiteHead";
 
 export default function Browse() {
   const [instructionals, setInstructionals] = useState<any[]>([]);
@@ -15,6 +16,11 @@ export default function Browse() {
 
   return (
     <>
+      <SiteHead
+        title="Browse | Instructional"
+        description="Create online guides and share them with whoever needs them"
+        image=""
+      />
       <NavBar />
       <MainContainer>
         <H1 text="Browse" />
