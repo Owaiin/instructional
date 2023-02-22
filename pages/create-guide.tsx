@@ -96,7 +96,7 @@ export default function Home() {
         <div className="mx-auto lg:grid lg:grid-cols-2 lg:gap-10">
           {stepArray.length === 0 ? (
             <StepComponent
-              stepArray={stepArray}
+              mainArray={stepArray}
               setStepArray={setStepArray}
               pullData={addToStepArray}
               stepNumber={1}
@@ -108,7 +108,7 @@ export default function Home() {
                   stepNumber={idx + 1}
                   key={idx}
                   pullData={addToStepArray}
-                  stepArray={stepArray}
+                  mainArray={stepArray}
                   setStepArray={setStepArray}
                 />
               );

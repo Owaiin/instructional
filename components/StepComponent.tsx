@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function StepComponent(props: {
   stepNumber: number;
   pullData: any;
-  setStepArray: [];
-  stepArray: [];
+  setStepArray: any;
+  mainArray: any;
 }) {
   const [typeContent, setTypeContent] = useState("");
   const [isEditable, setIsEditable] = useState(true);
@@ -76,7 +76,7 @@ export default function StepComponent(props: {
         )}
 
         <div className="mb-5">
-          {imgUrl !== null ? (
+          {imgUrl !== "" ? (
             <Image
               src={imgUrl}
               width={500}

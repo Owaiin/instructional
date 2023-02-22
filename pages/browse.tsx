@@ -27,6 +27,8 @@ export default function Browse() {
                   title={item.data.name}
                   description={item.data.description}
                   postId={item.id}
+                  delete={false}
+                  onSmash={undefined}
                 />
               );
             })}
