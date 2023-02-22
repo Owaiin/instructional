@@ -15,7 +15,7 @@ export default function SmallCard(props: {
     <>
       <div className="relative h-full w-full">
         <button
-          className=" absolute right-0 z-50 my-2 mr-2 mt-2 text-xl"
+          className=" absolute right-0 z-10 my-2 mr-2 mt-2 text-xl"
           onClick={props?.onSmash}
         >
           {props?.delete && (
