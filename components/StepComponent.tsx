@@ -62,8 +62,10 @@ export default function StepComponent(props: {
     <>
       <div
         className={`my-3 h-full w-full rounded-2xl border ${
-          isEditable ? "border-blue-500 shadow-2xl" : "border-gray-300"
-        }  p-5`}
+          isEditable
+            ? "border-blue-300 shadow-2xl shadow-blue-300"
+            : "border-gray-300"
+        }  p-5 transition-all duration-300 ease-in-out`}
       >
         <h3 className="mb-2 text-lg font-medium">Step {props.stepNumber} </h3>
         {/* image upload */}
@@ -104,13 +106,13 @@ export default function StepComponent(props: {
 
         {isEditable ? (
           <textarea
-            className="h-full w-full rounded-2xl border p-5"
+            className=" w-full rounded-2xl border p-5"
             name="text"
             placeholder="Type step info here"
             onChange={(e) => typeHandler(e)}
           />
         ) : (
-          <div>
+          <div className="w-full">
             <p>{typeContent}</p>
           </div>
         )}
@@ -139,7 +141,7 @@ export default function StepComponent(props: {
                 setIsEditable(false);
               }}
             >
-              Add Next Step
+              Save step
             </button>
           ) : (
             <></>

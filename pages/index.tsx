@@ -13,10 +13,12 @@ import LogOut from "@/components/authComponents/LogOut";
 import { useUserAuth } from "@/contexts/UserContext";
 import NavBar from "@/components/coreComponents/NavBar";
 import { useRouter } from "next/router";
+import { Sign } from "crypto";
 
 export default function Home() {
   const { user } = useUserAuth();
   const router = useRouter();
+  const [signUpOpen, setSignUpOpen] = useState(false);
 
   // useEffect(() => {
   //   if (user) {
@@ -41,13 +43,31 @@ export default function Home() {
           <p className="mb-3 text-lg leading-8">
             Put together guides and tutorials quickly and easily.
           </p>
-          <Link href="/create-guide">
-            <button className=" rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 px-5 py-2  font-medium tracking-wider text-white shadow-lg transition-all  hover:from-yellow-400 hover:to-orange-500">
-              Create
-            </button>
-          </Link>
+          <div>
+            <Link href="/create-guide">
+              <button className=" rounded-2xl bg-blue-500 px-5  py-2 font-medium tracking-wider  text-white transition-all hover:bg-green-500">
+                Create
+              </button>
+            </Link>
+            {user ? (
+              <button
+                onClick={() => router.push("/browse")}
+                className=" ml-5 rounded-2xl border px-5 py-2  font-medium tracking-wider   transition-all duration-300 ease-in-out  hover:bg-green-500 hover:text-white"
+              >
+                Browse
+              </button>
+            ) : (
+              <button
+                onClick={() => setSignUpOpen(true)}
+                className=" ml-5 rounded-2xl border px-5 py-2  font-medium tracking-wider   transition-all duration-300 ease-in-out  hover:bg-green-500 hover:text-white"
+              >
+                SignUp
+              </button>
+            )}
+          </div>
         </div>
       </header>
+      {signUpOpen ? <SignUp setOpen={() => setSignUpOpen(false)} /> : <></>}
     </>
   );
 }

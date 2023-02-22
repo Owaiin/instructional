@@ -7,6 +7,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { usePostsContext } from "@/contexts/PostsContext";
 import SmallCard from "@/components/coreComponents/Cards";
 import MainContainer from "@/components/coreComponents/MainContainer";
+import H1 from "@/components/coreComponents/styleComponents/H1";
 
 export default function Profile() {
   const { user, updateUserName } = useUserAuth();
@@ -21,7 +22,8 @@ export default function Profile() {
 
   // If user isn't signed in - redirect to home page - otherwise, getUserDocs on mount
   useEffect(() => {
-    if (!user) {
+    if (user === null) {
+      console.log("triggered useEffect");
       router.push("/");
     }
   }, [user]);
@@ -31,39 +33,11 @@ export default function Profile() {
       <NavBar />
       <MainContainer>
         <div>
-          <h1 className="mb-5 text-4xl font-bold text-gray-800">
-            {user.displayName ? userName : "Set your username :)"}
-          </h1>
-          <p>
-            <span className="font-semibold text-gray-800">Email: </span>
-            {user && user.email}
-          </p>
-          {!user.displayName ? (
-            <>
-              <p>Add new username</p>
-              <form action="">
-                <input
-                  className="border"
-                  type="text"
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    updateUserName(userName);
-                  }}
-                >
-                  Change
-                </button>
-              </form>
-            </>
-          ) : (
-            <></>
-          )}
+          <H1 text="Profile" />
         </div>
         {/* User Posts */}
         <div className="container mx-auto">
-          <ul className=" grid list-none grid-cols-2 gap-5">
+          <ul className=" grid list-none grid-cols-2 gap-5 lg:grid-cols-4">
             {postArray &&
               // filter the postArray to display only posts that with a user field that matches the user uid
               postArray

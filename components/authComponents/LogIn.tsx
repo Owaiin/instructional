@@ -23,34 +23,6 @@ export default function LogIn(props: { setOpen: any }) {
 
   return (
     <>
-      {/* <p>LogIn</p>
-      <div>
-        <form
-          className="grid w-full gap-5"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(e);
-          }}
-        >
-          <div>
-            <label htmlFor="email">Email Address</label>
-            <input
-              className="border p-2"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              className="border p-2"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button className=" rounded-lg border px-5 py-2">Sign Up</button>
-        </form>
-      </div> */}
       <AccountDetailsForm
         title="Login"
         closeToggle={props.setOpen}

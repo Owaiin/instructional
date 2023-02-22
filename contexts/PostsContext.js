@@ -17,13 +17,13 @@ export function PostContextProvider({ children }) {
         { id: doc.id, data: doc.data() },
       ]);
     });
-    console.log("getDataReached");
-    console.log(dataSnapshot.docs);
+    // console.log("getDataReached");
+    // console.log(dataSnapshot.docs);
   };
 
   useEffect(() => {
     getData();
-    console.log("posts mounting");
+    // console.log("posts mounting");
   }, []);
 
   return (

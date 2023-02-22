@@ -5,12 +5,14 @@ import NavMenu from "./NavMenu";
 import { useState } from "react";
 import Link from "next/link";
 import SignUp from "../authComponents/SignUp";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
   const { user } = useUserAuth();
   const [navOpen, setNavOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -25,7 +27,13 @@ export default function NavBar() {
 
           <div className="flex h-full">
             <RiAccountCircleLine
-              onClick={() => setLoginOpen(true)}
+              onClick={() => {
+                if (!user) {
+                  setLoginOpen(true);
+                } else {
+                  router.push("/user/profile");
+                }
+              }}
               className="mr-5 cursor-pointer"
             />
             {!navOpen ? (
@@ -42,7 +50,7 @@ export default function NavBar() {
           </div>
         </div>
       </nav>
-      {signUpOpen ? <SignUp setOpen={() => setSignUpOpen(false)} /> : <></>}
+
       {loginOpen ? <LogIn setOpen={() => setLoginOpen(false)} /> : <> </>}
       {navOpen ? <NavMenu setNav={() => setNavOpen(false)} /> : <></>}
     </>

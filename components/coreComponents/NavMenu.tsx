@@ -7,7 +7,7 @@ export default function NavMenu(props: { setNav: any }) {
 
   return (
     <>
-      <div className="absolute top-0 left-0 z-40 flex h-screen w-screen flex-col items-center justify-center bg-white text-center">
+      <div className="fixed top-0 left-0 z-40 flex h-screen w-screen flex-col items-center justify-center bg-white text-center">
         <ul className="grid gap-12 text-2xl font-bold text-gray-500">
           <Link onClick={props.setNav} href="/">
             <li className="cursor-pointer transition-all duration-300 ease-in-out  hover:text-gray-900">
@@ -33,14 +33,7 @@ export default function NavMenu(props: { setNav: any }) {
           ) : (
             <></>
           )}
-
-          {user ? (
-            <LogOut />
-          ) : (
-            <li className="cursor-pointer transition-all duration-300 ease-in-out hover:text-gray-900 ">
-              SignUp | Login
-            </li>
-          )}
+          {user ? <LogOut /> : <></>}
         </ul>
       </div>
     </>

@@ -7,6 +7,7 @@ import { usePostsContext } from "@/contexts/PostsContext";
 import SmallCard from "@/components/coreComponents/Cards";
 import MainContainer from "@/components/coreComponents/MainContainer";
 import { Main } from "next/document";
+import H1 from "@/components/coreComponents/styleComponents/H1";
 
 export default function Browse() {
   const [instructionals, setInstructionals] = useState<any[]>([]);
@@ -16,6 +17,7 @@ export default function Browse() {
     <>
       <NavBar />
       <MainContainer>
+        <H1 text="Browse" />
         <ul className=" grid list-none grid-cols-2 gap-5 xl:grid-cols-4">
           {postArray &&
             postArray.map((item: any, idx: number) => {
@@ -29,7 +31,6 @@ export default function Browse() {
               );
             })}
         </ul>
-        <button onClick={() => console.log(postArray)}>log posts</button>
       </MainContainer>
     </>
   );

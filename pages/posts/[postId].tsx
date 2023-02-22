@@ -10,6 +10,7 @@ import Image from "next/image";
 import MainContainer from "@/components/coreComponents/MainContainer";
 import H1 from "@/components/coreComponents/styleComponents/H1";
 import H2 from "@/components/coreComponents/styleComponents/H2";
+import SiteHead from "@/components/coreComponents/SiteHead";
 
 interface postInterface {
   id: string;
@@ -25,17 +26,22 @@ export default function PostPage(props: { post: any }) {
   return (
     <>
       <NavBar />
+      <SiteHead
+        title={props.post.name}
+        description={props.post.description}
+        image={props.post.steps[1].imageUrl}
+      />
       <MainContainer>
         <H1 text={props.post.name} />
         <p>{props.post.description}</p>
-        <ul className="">
+        <ul className=" md:grid md:grid-cols-3 md:gap-10">
           {props.post.steps
             .filter((step: any) => step.id !== 0)
             .map((step: any, idx: number) => {
               return (
                 <>
                   <li
-                    className="  my-10 rounded-2xl bg-white p-5 shadow-2xl"
+                    className=" my-10  rounded-2xl  border border-neutral-500 bg-white p-5 transition-all duration-300 ease-in-out hover:shadow-2xl"
                     key={idx}
                   >
                     {step.imageUrl !== null ? (
@@ -43,8 +49,9 @@ export default function PostPage(props: { post: any }) {
                         src={step.imageUrl}
                         width={500}
                         height={500}
+                        quality={90}
                         alt="alt image description"
-                        className="mb-5 rounded-2xl"
+                        className="mb-5 w-full rounded-2xl object-cover object-center"
                       />
                     ) : (
                       <></>

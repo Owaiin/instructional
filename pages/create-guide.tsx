@@ -9,6 +9,7 @@ import { useUserAuth } from "@/contexts/UserContext";
 import { usePostsContext } from "@/contexts/PostsContext";
 import MainContainer from "@/components/coreComponents/MainContainer";
 import { useRouter } from "next/router";
+import H1 from "@/components/coreComponents/styleComponents/H1";
 
 export default function Home() {
   interface step {
@@ -20,7 +21,7 @@ export default function Home() {
   const [stepArray, setStepArray] = useState<step[]>([
     { id: 0, content: "", name: "", imageUrl: "" },
   ]);
-  const [instructionalName, setInstructionalName] = useState("");
+  const [instructionalName, setInstructionalName] = useState(null);
   const [instructional, setInstructional] = useState({});
   const [description, setDescription] = useState("");
   const { user } = useUserAuth();
@@ -44,7 +45,7 @@ export default function Home() {
     setDescription(value);
   };
 
-  // Build the instructional object
+  // Build the instructional object for local use
   const saveInstructional = () => {
     setInstructional({
       name: instructionalName,
@@ -76,20 +77,23 @@ export default function Home() {
       </Head>
       <NavBar />
       <MainContainer>
+        <H1 text="Create" />
         <input
           className="my-5 block w-full bg-transparent text-2xl font-semibold"
           type="text"
+          required
           placeholder="Instructional Name..."
           onChange={(e) => handleInstructionalName(e)}
         />
         <textarea
           className="mb-5 block w-full rounded border bg-transparent p-2"
           name="text"
+          required
           onChange={(e) => handleDescription(e)}
           placeholder="Description..."
         />
 
-        <div className="mx-auto">
+        <div className="mx-auto lg:grid lg:grid-cols-2 lg:gap-10">
           {stepArray.length === 0 ? (
             <StepComponent
               stepArray={stepArray}
@@ -112,16 +116,21 @@ export default function Home() {
           )}
         </div>
         <button
-          className="block rounded-2xl border border-slate-700 px-5 py-2"
+          className=" my-16 block rounded-2xl bg-blue-500 px-5 py-2 font-bold text-white transition-colors duration-200 ease-in-out hover:bg-green-500"
           onClick={() => {
+            if (user && instructionalName) {
+              saveInstructional();
+              sendInstructional();
+              setPostArray([]);
+              getData();
+              router.push("/user/profile");
+            } else {
+              alert("You must be signed in to save!");
+            }
             // Need to put this into a single handler but it works for now
-            saveInstructional();
-            sendInstructional();
-            setPostArray([]);
-            getData();
           }}
         >
-          Save Instructional
+          Save and Publish
         </button>
       </MainContainer>
     </>
