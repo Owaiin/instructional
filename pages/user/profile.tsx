@@ -37,7 +37,7 @@ export default function Profile() {
         </div>
         {/* User Posts */}
         <div className="container mx-auto">
-          <ul className=" grid list-none grid-cols-2 gap-5 lg:grid-cols-4">
+          <ul className=" grid list-none gap-5 md:grid-cols-2 lg:grid-cols-4">
             {postArray &&
               // filter the postArray to display only posts that with a user field that matches the user uid
               postArray
