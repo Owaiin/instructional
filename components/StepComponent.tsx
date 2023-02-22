@@ -13,7 +13,7 @@ export default function StepComponent(props: {
   const [typeContent, setTypeContent] = useState("");
   const [isEditable, setIsEditable] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [imgUrl, setImgUrl] = useState(null);
+  const [imgUrl, setImgUrl] = useState("");
   const [progressPercent, setProgressPercent] = useState(0);
   const editElement = useRef();
 
